@@ -31,7 +31,9 @@
             "type": "string"
         }
     },
-    "variables": {},
+    "variables": {
+        "zoneID": "[concat('/subscriptions/YOURSUBSCRIPTIONNUMBER/resourcegroups/RESOURCEGROUPNAME/providers/Microsoft.Network/dnszones/', parameters('domainName'))]"
+    },
     "resources": [
         {
             "name": "[parameters('domainName')]",
