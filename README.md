@@ -11,6 +11,7 @@ Parameters sescion
 2. YourIPaddress: Your computer valid IP address. You can find it by navigating to https://www.whatismyip.com
 3. CurrentDateAndTime: in "yyyy-MM-ddTHH:mm:ss" format
 4. YourAuthCode: The code used to authenticate for domain transfer
+
 Variables sescion
 1. YOURSUBSCRIPTIONNUMBER: Replace with your specific Azure subscription number
 2. RESOURCEGROUPNAME: Replace with the resource group name you want to create the domain name zone in
