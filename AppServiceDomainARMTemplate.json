@@ -1,0 +1,93 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "domainName": {
+            "defaultValue": "YourDomain.com",
+            "type": "string"
+        },
+        "autoRenew": {
+            "defaultValue": "true",
+            "type": "bool"
+        },
+        "privacy": {
+            "defaultValue": "true",
+            "type": "bool"
+        },
+        "AgreedBy": {
+            "defaultValue": "yourIPaddress",
+            "type": "string"
+        },
+        "AgreedAt": {
+            "defaultValue": "CurrentDateAndTime",
+            "type": "string"
+        },
+        "Authcode": {
+            "defaultValue": "YourAuthCode",
+            "type": "string"
+        },
+        "newZoneName": {
+            "defaultValue": "YourDomain.com",
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('domainName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnsZones/', parameters('domainName'))]"
+            ],
+            "properties": {
+                "dnsZoneId": "[variables('zoneID')]",
+                "privacy": "[parameters('privacy')]",
+                "targetDnsType": "AzureDns",
+                "Consent": {
+                    "AgreedAt": "[parameters('AgreedAt')]",
+                    "AgreementKeys": [
+                        "DNPA",
+                        "DNTA"
+                    ],
+                    "AgreedBy": "[parameters('AgreedBy')]"
+                },
+                "authCode": "[parameters('Authcode')]",
+                "autoRenew": "[parameters('autoRenew')]"
+            },
+            "type": "Microsoft.DomainRegistration/domains",
+            "apiVersion": "2019-08-01",
+            "location": "global"
+        },
+        {
+            "scope": "[concat('Microsoft.DomainRegistration/domains/', parameters('domainName'))]",
+            "name": "BlockDomainDelete",
+            "dependsOn": [
+                "[resourceId('Microsoft.DomainRegistration/domains/', parameters('domainName'))]"
+            ],
+            "properties": {
+                "level": "CanNotDelete",
+                "notes": "App Service Domain should not be deleted."
+            },
+            "type": "Microsoft.Authorization/locks",
+            "apiVersion": "2016-09-01"
+        },
+        {
+            "name": "[parameters('newZoneName')]",
+            "apiVersion": "2018-05-01",
+            "type": "Microsoft.Network/dnsZones",
+            "location": "global"
+        },
+        {
+            "scope": "[concat('Microsoft.Network/dnsZones/', parameters('domainName'))]",
+            "name": "BlockDNSDelete",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/dnsZones/', parameters('domainName'))]"
+            ],
+            "properties": {
+                "level": "CanNotDelete",
+                "notes": "DNS Zone should not be deleted."
+            },
+            "type": "Microsoft.Authorization/locks",
+            "apiVersion": "2016-09-01"
+        }
+    ]
+}
