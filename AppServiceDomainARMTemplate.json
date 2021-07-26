@@ -25,15 +25,9 @@
         "Authcode": {
             "defaultValue": "YourAuthCode",
             "type": "string"
-        },
-        "newZoneName": {
-            "defaultValue": "YourDomain.com",
-            "type": "string"
         }
     },
-    "variables": {
-        "zoneID": "[concat('/subscriptions/YOURSUBSCRIPTIONNUMBER/resourcegroups/RESOURCEGROUPNAME/providers/Microsoft.Network/dnszones/', parameters('domainName'))]"
-    },
+    "variables": {},
     "resources": [
         {
             "name": "[parameters('domainName')]",
@@ -73,7 +67,7 @@
             "apiVersion": "2016-09-01"
         },
         {
-            "name": "[parameters('newZoneName')]",
+            "name": "[parameters('domainName')]",
             "apiVersion": "2018-05-01",
             "type": "Microsoft.Network/dnsZones",
             "location": "global"
