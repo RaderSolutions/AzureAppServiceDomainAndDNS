@@ -18,4 +18,4 @@ Variables sescion
 
 After seting those parameters, you can use it to "Deploy a custom template" through Azure portal, which looks like following figure. 
 
-![image](https://user-images.githubusercontent.com/54755447/126550988-a86f049e-45cb-4c0d-b707-5f5ec8763fc7.png)
+![image](https://user-images.githubusercontent.com/54755447/126993302-1e07364a-ed99-46ac-a20f-b13357ef103d.png)
